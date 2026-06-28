@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samya Aggarwal — Software Engineer</title>
+<style>
+  :root{
+    --bg:#000;
+    --panel:#111114;
+    --panel-2:#16161a;
+    --line:rgba(255,255,255,0.10);
+    --line-strong:rgba(255,255,255,0.22);
+    --text:#f5f5f7;
+    --text-dim:#86868b;
+    --text-dim-2:#a1a1a6;
+    --blue:#2997ff;
+    --purple:#a855f7;
+    --green:#30d158;
+    --orange:#ff9f0a;
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter",Arial,sans-serif;
+    --mono:"SF Mono","IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--text); font-family:var(--font);
+    -webkit-font-smoothing:antialiased; letter-spacing:-0.01em;
+  }
+  a{color:var(--blue); text-decoration:none;}
+  ::selection{background:var(--blue); color:#000;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    backdrop-filter:saturate(180%) blur(20px); background:rgba(0,0,0,0.72);
+    border-bottom:1px solid var(--line);
+  }
+  nav .inner{max-width:1080px; margin:0 auto; padding:0 24px; height:52px; display:flex; align-items:center; justify-content:space-between;}
+  nav .logo{font-size:14px; font-weight:600;}
+  nav .dl{font-size:12.5px; font-weight:600; color:var(--text); border:1px solid var(--line); border-radius:980px; padding:6px 16px; transition:border-color .2s;}
+  nav .dl:hover{text-decoration:none; border-color:var(--blue); color:var(--blue);}
+
+  header.hero{
+    min-height:78vh; display:flex; flex-direction:column; justify-content:center;
+    padding:120px 0 60px; text-align:center; position:relative;
+    background:radial-gradient(ellipse 70% 60% at 50% 0%, rgba(41,151,255,0.16), transparent 60%);
+  }
+  .avatar{
+    width:148px; height:148px; border-radius:50%; margin:0 auto 28px; background:var(--panel);
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+    font-size:12px; color:var(--text-dim); overflow:hidden;
+    box-shadow:0 18px 40px rgba(41,151,255,0.18);
+  }
+  .kicker{font-size:14px; color:var(--blue); font-weight:600; margin:0 0 16px;}
+  h1{
+    font-size:clamp(40px,7vw,72px); font-weight:700; line-height:1.04; margin:0 auto 18px; letter-spacing:-0.02em;
+    background:linear-gradient(180deg,#fff 0%,#fff 60%,#9b9ba1 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.sub{font-size:clamp(17px,2vw,20px); color:var(--text-dim-2); max-width:560px; margin:0 auto 36px;}
+  .hero p.sub strong{color:var(--text); font-weight:600;}
+  .hero-cta{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .btn{display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:600; padding:10px 22px; border-radius:980px; transition:transform .15s,opacity .15s;}
+  .btn:hover{transform:translateY(-1px); text-decoration:none;}
+  .btn-primary{background:var(--blue); color:#000;}
+  .btn-primary:hover{opacity:.88;}
+  .btn-secondary{border:1px solid var(--line); color:var(--text);}
+  .btn-secondary:hover{border-color:var(--text-dim-2);}
+  .contact-line{font-family:var(--mono); font-size:13.5px; color:var(--text-dim-2); margin-top:22px;}
+  .contact-line a{color:var(--text-dim-2);}
+  .contact-line a:hover{color:var(--blue);}
+
+  .bento-section{padding:30px 0 50px;}
+  .bento{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+    grid-auto-rows:minmax(110px,auto);
+  }
+  @media (max-width:900px){ .bento{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .bento{grid-template-columns:1fr;} }
+
+  .tile{
+    background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:24px;
+    display:flex; flex-direction:column; transition:transform .25s ease, border-color .25s ease;
+    position:relative; overflow:hidden;
+  }
+  .tile:hover{transform:translateY(-3px); border-color:var(--line-strong);}
+  .tile .glow{position:absolute; width:220px; height:220px; border-radius:50%; pointer-events:none; top:-90px; right:-90px; filter:blur(4px);}
+
+  .span2{grid-column:span 2;}
+  .span4{grid-column:span 4;}
+  .rowspan2{grid-row:span 2;}
+  @media (max-width:900px){ .span4{grid-column:span 2;} }
+  @media (max-width:560px){ .span2, .span4{grid-column:span 1;} }
+
+  .group{margin-bottom:54px;}
+  .group-head{display:flex; align-items:baseline; gap:12px; margin-bottom:18px;}
+  .group-head h2{font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:var(--blue); font-weight:700; margin:0;}
+  .group-head::after{content:""; flex:1; height:1px; background:var(--line);}
+
+  .tile-label{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--text-dim); margin-bottom:auto; padding-bottom:14px;}
+  .tile h3{font-size:18px; font-weight:700; margin:0 0 6px; letter-spacing:-0.01em;}
+  .tile .org{font-family:var(--mono); font-size:11.5px; color:var(--text-dim); margin-bottom:14px;}
+  .tile p{font-size:14px; color:var(--text-dim-2); margin:0; line-height:1.55;}
+  .tile ul{margin:10px 0 0; padding:0; list-style:none;}
+  .tile li{font-size:14px; color:var(--text-dim-2); padding-left:16px; position:relative; margin-bottom:8px; line-height:1.5;}
+  .tile li::before{content:"–"; position:absolute; left:0; color:var(--blue);}
+  .tile li strong{color:var(--text); font-weight:600;}
+  .highlight{color:var(--blue); font-weight:700;}
+  .tile .link{margin-top:14px; font-size:13px; font-weight:600;}
+
+  .big-num{font-size:44px; font-weight:700; letter-spacing:-0.02em; line-height:1;}
+  .big-lbl{font-size:13px; color:var(--text-dim); margin-top:6px;}
+
+  .chip-tile{display:flex; flex-direction:row; flex-wrap:wrap; gap:8px; align-content:flex-start;}
+  .chip{font-size:13px; padding:7px 14px 7px 10px; border-radius:980px; border:1px solid var(--line); color:var(--text-dim-2); display:inline-flex; align-items:center; gap:7px;}
+  .chip img{width:15px; height:15px; display:block;}
+
+  .ach-list{display:flex; flex-direction:column; gap:10px;}
+  .ach-row{display:flex; justify-content:space-between; gap:10px; font-size:13.5px;}
+  .ach-row .t{color:var(--text); font-weight:600;}
+  .ach-row .d{color:var(--text-dim); text-align:right; font-size:12.5px;}
+
+  .community-tile{display:flex; flex-direction:column; gap:10px;}
+  .community-row{display:flex; gap:10px; align-items:flex-start; font-size:14px; color:var(--text-dim-2);}
+  .community-row strong{color:var(--text);}
+
+  footer{padding:50px 0 60px; text-align:center; background:radial-gradient(ellipse 70% 50% at 50% 100%, rgba(41,151,255,0.14), transparent 60%);}
+  footer h2{font-size:clamp(30px,5vw,46px); font-weight:700; margin:0 0 14px; letter-spacing:-0.02em;}
+  footer p{font-size:17px; color:var(--text-dim-2); margin:0 0 30px;}
+  .foot-links{display:flex; justify-content:center; gap:12px; flex-wrap:wrap;}
+  .copyright{font-size:12px; color:var(--text-dim); margin-top:46px;}
+
+  @media (prefers-reduced-motion: reduce){ .tile{transition:none;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <span class="logo">Samya Aggarwal</span>
+    <a class="dl" href="Samya_Aggarwal_Resume.pdf" download>↓ Resume</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="avatar">
+    <img src="pic2.jpg"
+         alt="Samya Aggarwal"
+         style="width:100%;height:100%;object-fit:cover;">
+</div>
+    <p class="kicker">Backend &amp; Systems Engineer</p>
+    <h1>Samya Aggarwal</h1>
+    <p class="sub">Computer Science &amp; Business Systems student at <strong>Thapar Institute of Engineering and Technology (TIET)</strong>, holding a <strong>9.74 CGPA</strong>. A self-starter with a genuine zeal for building new things — backend systems and software services engineered to hold up at scale, not just in a demo.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="Samya_Aggarwal_Resume.pdf" download>Download Resume</a>
+    </div>
+    <p class="contact-line">samyaggarwal005@gmail.com · +91 98780 26820 · <a href="https://www.linkedin.com/in/samya-aggarwal-5729182a6/" target="_blank">LinkedIn</a> · <a href="https://github.com/Samya-Agg" target="_blank">GitHub</a></p>
+  </div>
+</header>
+
+<section class="bento-section">
+  <div class="wrap">
+    <div class="group">
+      <div class="group-head"><h2>Experience</h2></div>
+      <div class="bento">
+        <div class="tile span2">
+          <div class="glow" style="background:radial-gradient(circle, rgba(41,151,255,0.25), transparent 70%);"></div>
+          <div class="tile-label">Zylectra · Sep–Oct '25</div>
+          <h3>Software Development Intern</h3>
+          <div class="org">Venture Lab, TIET</div>
+          <ul>
+            <li>Engineered a <strong>Node.js</strong> backend that resolves booking conflicts under real concurrent load.</li>
+            <li>Shaved <strong>~25%</strong> off API latency by introducing Redis caching alongside FastAPI-driven recommendations.</li>
+          </ul>
+        </div>
+
+        <div class="tile span2">
+          <div class="glow" style="background:radial-gradient(circle, rgba(168,85,247,0.22), transparent 70%);"></div>
+          <div class="tile-label">InveshoAI · Jun–Aug '25, Remote US</div>
+          <h3>Software Engineering Intern</h3>
+          <ul>
+            <li>Built <strong>FastAPI</strong> automation tooling that quietly absorbed a team's worth of repetitive manual work.</li>
+            <li>Shipped launch infrastructure behind a Product Hunt release that landed in <strong>30+ countries</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="tile">
+          <div class="glow" style="background:radial-gradient(circle, rgba(48,209,88,0.22), transparent 70%);"></div>
+          <div class="tile-label">CGPA</div>
+          <div class="big-num">9.74</div>
+          <div class="big-lbl">out of 10.0</div>
+        </div>
+
+        <div class="tile">
+          <div class="glow" style="background:radial-gradient(circle, rgba(255,159,10,0.2), transparent 70%);"></div>
+          <div class="tile-label">DSA</div>
+          <div class="big-num">300+</div>
+          <div class="big-lbl">problems solved</div>
+        </div>
+
+        <div class="tile">
+          <div class="glow" style="background:radial-gradient(circle, rgba(41,151,255,0.18), transparent 70%);"></div>
+          <div class="tile-label">Internships</div>
+          <div class="big-num">2</div>
+          <div class="big-lbl">backend &amp; systems roles</div>
+        </div>
+
+        <div class="tile">
+          <div class="glow" style="background:radial-gradient(circle, rgba(168,85,247,0.18), transparent 70%);"></div>
+          <div class="tile-label">Shipped</div>
+          <div class="big-num">3</div>
+          <div class="big-lbl">end-to-end products</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-head"><h2>Projects</h2></div>
+      <div class="bento">
+        <div class="tile span2">
+          <div class="glow" style="background:radial-gradient(circle, rgba(41,151,255,0.2), transparent 70%);"></div>
+          <div class="tile-label">Featured Build</div>
+          <h3>SyncRoomies</h3>
+          <div class="org">Django Channels · WebSockets · CI/CD</div>
+          <p>A roommate-matching platform with chat that's actually live, not refresh-to-check — built for <strong class="highlight">30+ users</strong>, with Selenium tests wired into CI/CD to keep production bugs out before they ship.</p>
+          <a class="link" href="https://syncroomies-backend.onrender.com/" target="_blank">View Live →</a>
+        </div>
+
+        <div class="tile">
+          <div class="tile-label">Project</div>
+          <h3 style="font-size:16px;">SafeSpace</h3>
+          <p>AI mental health platform — ESP32 wearable + real-time inference at 85% accuracy, with SHAP explainability.</p>
+          <a class="link" href="https://safespace-three.vercel.app/" target="_blank">View Live →</a>
+        </div>
+
+        <div class="tile">
+          <div class="tile-label">Project</div>
+          <h3 style="font-size:16px;">SmartKheti</h3>
+          <p>A CNN that spots crop disease at 80% accuracy, then tells farmers what to plant next.</p>
+          <a class="link" href="https://github.com/Samya-Agg/SmartKheti" target="_blank">GitHub →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-head"><h2>Skills</h2></div>
+      <div class="bento">
+        <div class="tile span4 chip-tile">
+          <span class="chip"><img src="https://cdn.simpleicons.org/python" alt=""> Python</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/cplusplus" alt=""> C++</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/javascript" alt=""> JavaScript</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/mysql" alt=""> SQL</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/django/white" alt=""> Django</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/fastapi" alt=""> FastAPI</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/nodedotjs/339933" alt=""> Node.js</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/redis/DC382D" alt=""> Redis</span>
+          <span class="chip"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6.5 13.5c1.8 1.3 4 2 6.5 2 2.2 0 4-.5 5.5-1.3" stroke="#FF9900" stroke-width="1.8" stroke-linecap="round"/><path d="M17 14.2c.6.7 1.4 1.3 1.4 1.3s-.9.2-1.7 0" stroke="#FF9900" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="3" y="9" font-family="Arial,sans-serif" font-weight="700" font-size="9" fill="#FF9900">aws</text></svg> AWS</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/postgresql" alt=""> PostgreSQL</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/git/F05032" alt=""> Git</span>
+          <span class="chip"><img src="https://cdn.simpleicons.org/linux/FCC624" alt=""> Linux</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-head"><h2>Achievements</h2></div>
+      <div class="bento">
+        <div class="tile span2">
+          <div class="tile-label">Recognition</div>
+          <div class="ach-list">
+            <div class="ach-row"><span class="t">Amazon ML Summer School '25</span><span class="d">1 of 3,000 nationwide</span></div>
+            <div class="ach-row"><span class="t">Reliance Foundation Scholar</span><span class="d">1 of 5,000; ₹2L scholarship</span></div>
+            <div class="ach-row"><span class="t">HackPrinceton '26</span><span class="d">Selected to compete</span></div>
+          </div>
+        </div>
+        <div class="tile span2">
+          <div class="tile-label">Track Record</div>
+          <div class="ach-list">
+            <div class="ach-row"><span class="t">Indian-Israeli Hackathon</span><span class="d">3rd Prize</span></div>
+            <div class="ach-row"><span class="t">Academic Rank</span><span class="d">3rd, '23–'25; 50% scholarship</span></div>
+            <div class="ach-row"><span class="t">Hacktoberfest '25</span><span class="d">Supercontributor, 6+ PRs</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group" style="margin-bottom:0;">
+      <div class="group-head"><h2>Beyond the Stack</h2></div>
+      <div class="bento">
+        <div class="tile span4 community-tile">
+          <div class="glow" style="background:radial-gradient(circle, rgba(48,209,88,0.18), transparent 70%);"></div>
+          <div class="community-row"><strong>Teaching</strong> — volunteer teaching for school-going kids, steady presence over one-off visits.</div>
+          <div class="community-row"><strong>Old-Age Homes</strong> — regular visits, time and conversation, not just donations.</div>
+          <div class="community-row"><strong>Orphanages</strong> — ongoing engagement with children in the community.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's build something that ships.</h2>
+    <p>A born problem solver, looking to collaborate on the next big thing — open to backend and systems engineering roles for placement season 2026.</p>
+    <div class="foot-links">
+      <a class="btn btn-primary" href="Samya_Aggarwal_Resume.pdf" download>Download Resume</a>
+    </div>
+    <p class="contact-line">samyaggarwal005@gmail.com · +91 98780 26820 · <a href="https://www.linkedin.com/in/samya-aggarwal-5729182a6/" target="_blank">LinkedIn</a> · <a href="https://github.com/Samya-Agg" target="_blank">GitHub</a></p>
+    <div class="copyright">© 2026 Samya Aggarwal</div>
+  </div>
+</footer>
+
+</body>
+</html>
